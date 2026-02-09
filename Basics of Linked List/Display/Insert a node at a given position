@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definition of node
+struct node {
+    int data;
+    struct node *next;
+};
+
+// Function to insert at given position
+struct node* insertAtPosition(struct node *head, int value, int pos) {
+    struct node *newNode, *temp;
+    int i;
+
+    newNode = (struct node *)malloc(sizeof(struct node));
+    newNode->data = value;
+
+    // Insert at beginning
+    if (pos == 1) {
+        newNode->next = head;
+        head = newNode;
+        return head;
+    }
+
+    temp = head;
+    for (i = 1; i < pos - 1 && temp != NULL; i++) {
+        temp = temp->next;
+    }
+
+    // Invalid position
+    if (temp == NULL) {
+        printf("Invalid position\n");
+        return head;
+    }
+
+    newNode->next = temp->next;
+    temp->next = newNode;
+
+    return head;
+}
+
+// Function to display list
+void display(struct node *head) {
+    struct node *temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct node *head = NULL;
+
+    head = insertAtPosition(head, 10, 1);
+    head = insertAtPosition(head, 20, 2);
+    head = insertAtPosition(head, 30, 3);
+    head = insertAtPosition(head, 25, 3);
+
+    display(head);
+
+    return 0;
+}
