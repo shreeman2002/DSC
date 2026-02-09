@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definition of node
+struct node {
+    int data;
+    struct node *next;
+};
+
+// Function to delete from beginning
+struct node* deleteBegin(struct node *head) {
+    struct node *temp;
+
+    // If list is empty
+    if (head == NULL) {
+        printf("Linked list is empty\n");
+        return head;
+    }
+
+    temp = head;        // store old head
+    head = head->next;  // move head
+    free(temp);         // free memory
+
+    return head;
+}
+
+// Function to display list
+void display(struct node *head) {
+    struct node *temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct node *head = NULL;
+
+    // Creating list
+    head = (struct node *)malloc(sizeof(struct*
