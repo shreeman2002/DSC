@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definition of node
+struct node {
+    int data;
+    struct node *next;
+};
+
+// Function to search an element
+int search(struct node *head, int key) {
+    struct node *temp = head;
+    int position = 1;
+
+    while (temp != NULL) {
+        if (temp->data == key) {
+            return position;   // element found
+        }
+        temp = temp->next;
+        position++;
+    }
+    return -1;  // element not found
+}
+
+int main() {
+    struct node *head = NULL;
+    struct node *second = NULL;
+    struct node *third = NULL;
+
+    // Allocate memory
+    head = (struct node *)malloc(sizeof(struct node));
+    second = (struct node *)malloc(sizeof(struct node));
+    third = (struct node *)malloc(sizeof(struct node));
+
+    // Assign data and links
+    head->data = 10;
+    head->next = second;
+
+    second->data = 20;
+    second->next = third;
+
+    third->data = 30;
+    third->next = NULL;
+
+    int key = 20;
+    int pos = search(head, key);
+
+    if (pos != -1)
+        printf("Element %d found at position %d\n", key, pos);
+    else
+        printf("Element %d not found in the list\n", key);
+
+    return 0;
+}
