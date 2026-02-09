@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definition of node
+struct node {
+    int data;
+    struct node *next;
+};
+
+// Function to display linked list
+void display(struct node *head) {
+    struct node *temp = head;
+
+    if (temp == NULL) {
+        printf("Linked list is empty\n");
+        return;
+    }
+
+    printf("Linked list elements are:\n");
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    // Creating nodes
+    struct node *head = NULL;
+    struct node *second = NULL;
+    struct node *third = NULL;
+
+    // Allocate memory
+    head = (struct node *)malloc(sizeof(struct node));
+    second = (struct node *)malloc(sizeof(struct node));
+    third = (struct node *)malloc(sizeof(struct node));
+
+    // Assign data and links
+    head->data = 10;
+    head->next = second;
+
+    second->data = 20;
+    second->next = third;
+
+    third->data = 30;
+    third->next = NULL;
+
+    // Display linked list
+    display(head);
+
+    return 0;
+}
