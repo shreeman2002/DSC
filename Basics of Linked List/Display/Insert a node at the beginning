@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definition of node
+struct node {
+    int data;
+    struct node *next;
+};
+
+// Function to insert at beginning
+struct node* insertBegin(struct node *head, int value) {
+    struct node *newNode;
+
+    newNode = (struct node *)malloc(sizeof(struct node));
+
+    newNode->data = value;
+    newNode->next = head;
+    head = newNode;
+
+    return head;
+}
+
+// Function to display list
+void display(struct node *head) {
+    struct node *temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct node *head = NULL;
+
+    // Insert nodes
+    head = insertBegin(head, 30);
+    head = insertBegin(head, 20);
+    head = insertBegin(head, 10);
+
+    // Display list
+    display(head);
+
+    return 0;
+}
