@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+int isSorted(struct node *head) {
+    // Empty or single node list is sorted
+    if (head == NULL || head->next == NULL)
+        return 1;
+
+    while (head->next != NULL) {
+        if (head->data > head->next->data)
+            return 0;   // Not sorted
+        head = head->next;
+    }
+    return 1;   // Sorted
+}
+
+// Display function
+void display(struct node *head) {
+    while (head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct node *head = NULL;
+
+    // List: 10 -> 20 -> 30 -> 40
+    head = (struct node*)malloc(sizeof(struct node));
+    head->data = 10;
+    head->next = (struct node*)malloc(sizeof(struct node));
+    head->next->data = 20;
+    head->next->next = (struct node*)malloc(sizeof(struct node));
+    head->next->next->data = 30;
+    head->next->next->next = (struct node*)malloc(sizeof(struct node));
+    head->next->next->next->data = 40;
+    head->next->next->next->next = NULL;
+
+    display(head);
+
+    if (isSorted(head))
+        printf("The linked list is sorted\n");
+    else
+        printf("The linked list is NOT sorted\n");
+
+    return 0;
+}
