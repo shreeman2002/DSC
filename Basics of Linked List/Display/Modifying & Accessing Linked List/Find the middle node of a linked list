@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+void findMiddle(struct node *head) {
+    struct node *slow = head;
+    struct node *fast = head;
+
+    // Case: Empty list
+    if (head == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next;          // move by 1
+        fast = fast->next->next;    // move by 2
+    }
+
+    printf("Middle element = %d\n", slow->data);
+}
+
+// Display function
+void display(struct node *head) {
+    while (head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct node *head = NULL;
+
+    // Creating list: 10 -> 20 -> 30 -> 40 -> 50
+    head = (struct node*)malloc(sizeof(struct node));
+    head->data = 10;
+    head->next = (struct node*)malloc(sizeof(struct node));
+    head->next->data = 20;
+    head->next->next = (struct node*)malloc(sizeof(struct node));
+    head->next->next->data = 30;
+    head->next->next->next = (struct node*)malloc(sizeof(struct node));
+    head->next->next->next->data = 40;
+    head->next->next->next->next = (struct node*)malloc(sizeof(struct node));
+    head->next->next->next->next->data = 50;
+    head->next->next->next->next->next = NULL;
+
+    printf("Linked List:\n");
+    display(head);
+
+    findMiddle(head);
+
+    return 0;
+}
