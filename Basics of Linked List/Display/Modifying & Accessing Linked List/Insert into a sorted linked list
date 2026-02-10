@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+struct node* insertSorted(struct node *head, int value) {
+    struct node *newNode = (struct node*)malloc(sizeof(struct node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    // Case 1: Empty list or insert at beginning
+    if (head == NULL || value < head->data) {
+        newNode->next = head;
+        return newNode;
+    }
+
+    // Case 2: Insert at proper position
+    struct node *temp = head;
+    while (temp->next != NULL && temp->next->data < value) {
+        temp = temp->next;
+    }
+
+    newNode->next = temp->next;
+    temp->next = newNode;
+
+    return head;
+}
+
+// Display function
+void display(struct node *head) {
+    while (head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct node *head = NULL;
+
+    head = insertSorted(head, 10);
+    head = insertSorted(head, 5);
+    head = insertSorted(head, 20);
+    head = insertSorted(head, 15);
+
+    printf("Sorted Linked List:\n");
+    display(head);
+
+    return 0;
+}
