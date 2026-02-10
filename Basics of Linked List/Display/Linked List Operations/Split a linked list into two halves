@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+void splitList(struct node *head,
+               struct node **head1,
+               struct node **head2) {
+    struct node *slow = head;
+    struct node *fast = head;
+
+    // Case: empty or single node
+    if (head == NULL || head->next == NULL) {
+        *head1 = head;
+        *head2 = NULL;
+        return;
+    }
+
+    // Find middle using slow & fast pointers
+    while (fast->next != NULL && fast->next->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    *head1 = head;
+    *head2 = slow->next;
+    slow->next = NULL;   // split the list
+}
+
+// Display function
+void display(struct node *head) {
+    while (head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct node *head = NULL;
+    struct node *first = NULL;
+    struct node *second = NULL;
+
+    // List: 10 -> 20 -> 30 -> 40 -> 50
+    head = (struct node*)malloc(sizeof(struct node));
+    head->data = 10;
+    head->next = (struct node*)malloc(sizeof(struct node));
+    head->next->data = 20;
+    head->next->next = (struct node*)malloc(sizeof(struct node));
+    head->next->next->data = 30;
+    head->next->next->next = (struct node*)malloc(sizeof(struct node));
+    head->next->next->next->data = 40;
+    head->next->next->next->next = (struct node*)malloc(sizeof(struct node));
+    head->next->next->next->next->data = 50;
+    head->next->next->next->next->next = NULL;
+
+    printf("Original List:\n");
+    display(head);
+
+    splitList(head, &first, &second);
+
+    printf("First Half:\n");
+    display(first);
+
+    printf("Second Half:\n");
+    display(second);
+
+    return 0;
+}
