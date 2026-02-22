@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to move last node to front
+struct Node* moveLastToFront(struct Node* head) {
+    // If list is empty or has only one node
+    if (head == NULL || head->next == NULL)
+        return head;
+
+    struct Node *secondLast = NULL;
+    struct Node *last = head;
+
+    // Traverse to find last and second last node
+    while (last->next != NULL) {
+        secondLast = last;
+        last = last->next;
+    }
+
+    // Make second last node as last
+    secondLast->next = NULL;
+
+    // Move last node to front
+    last->next = head;
+    head = last;
+
+    return head;
+}
+
+// Function to print list
+void printList(struct Node* head) {
+    while (head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node *head = NULL;
+    struct Node *n1 = malloc(sizeof(struct Node));
+    struct Node *n2 = malloc(sizeof(struct Node));
+    struct Node *n3 = malloc(sizeof(struct Node));
+    struct Node *n4 = malloc(sizeof(struct Node));
+
+    n1->data = 1; n1->next = n2;
+    n2->data = 2; n2->next = n3;
+    n3->data = 3; n3->next = n4;
+    n4->data = 4; n4->next = NULL;
+
+    head = n1;
+
+    printf("Original List:\n");
+    printList(head);
+
+    head = moveLastToFront(head);
+
+    printf("After Moving Last to Front:\n");
+    printList(head);
+
+    return 0;
+}
