@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to detect loop
+int detectLoop(struct Node* head) {
+    struct Node *slow = head, *fast = head;
+
+    while (slow != NULL && fast != NULL && fast->next != NULL) {
+        slow = slow->next;          // move 1 step
+        fast = fast->next->next;    // move 2 steps
+
+        if (slow == fast) {
+            return 1;   // Loop found
+        }
+    }
+    return 0;   // No loop
+}
+
+int main() {
+    struct Node *head = NULL;
+    struct Node *second = NULL;
+    struct Node *third = NULL;
+
+    head = (struct Node*)malloc(sizeof(struct Node));
+    second = (struct Node*)malloc(sizeof(struct Node));
+    third = (struct Node*)malloc(sizeof(struct Node));
+
+    head->data = 1;
+    head->next = second;
+
+    second->data = 2;
+    second->next = third;
+
+    third->data = 3;
+    third->next = second;  // Creating a loop
+
+    if (detectLoop(head))
+        printf("Loop detected\n");
+    else
+        printf("No loop detected\n");
+
+    return 0;
+}
