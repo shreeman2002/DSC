@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* pairwiseSwap(struct Node* head) {
+    if (head == NULL || head->next == NULL)
+        return head;
+
+    struct Node *prev = NULL;
+    struct Node *current = head;
+    head = head->next;   // New head will be second node
+
+    while (current != NULL && current->next != NULL) {
+        struct Node *nextNode = current->next;
+        struct Node *nextPair = nextNode->next;
+
+        // Swap
+        nextNode->next = current;
+        current->next = nextPair;
+
+        // Connect previous pair
+        if (prev != NULL)
+            prev->next = nextNode;
+
+        prev = current;
+        current = nextPair;
+    }
+
+    return head;
+}
+
+// Print function
+void printList(struct Node* head) {
+    while (head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
